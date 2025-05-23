@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thought Provoker - Voting Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .voting-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 30px;
+        }
+
+        .voting-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            height: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            text-align: right;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .question {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: var(--dark);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            background-color: #f5f5f5;
+            padding: 15px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .option:hover {
+            background-color: #ebebeb;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background-color: rgba(108, 92, 231, 0.1);
+        }
+
+        .option input {
+            margin-right: 15px;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+
+        .option label {
+            flex: 1;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        .btn:hover {
+            background-color: #5a4bd1;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .thank-you {
+            text-align: center;
+            padding: 40px 0;
+            display: none;
+        }
+
+        .thank-you h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .thank-you p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .thank-you-icon {
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-30px);}
+            60% {transform: translateY(-15px);}
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+
+            .voting-card {
+                padding: 20px;
+            }
+
+            .question {
+                font-size: 1.3rem;
+            }
+
+            .option label {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">Thought Provoker</div>
+            <div class="tagline">Vote on today's thought-provoking questions</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="voting-card">
+            <div class="progress-text" id="progressText">Question 1 of 5</div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar" style="width: 20%"></div>
+            </div>
+
+            <div id="questionContainer">
+                <div class="question" id="questionText"></div>
+                <div class="options" id="optionsContainer"></div>
+                <button class="btn" id="submitBtn" disabled>Submit Answer</button>
+            </div>
+
+            <div class="thank-you" id="thankYou">
+                <div class="thank-you-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h2>Thank You!</h2>
+                <p id="thankYouMessage">We appreciate your thoughtful responses.</p>
+                <button class="btn" id="newQuestionsBtn">Answer More Questions</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2023 Thought Provoker - Stimulating minds one question at a time</p>
+        </div>
+    </footer>
+
+    <script>
+        // Question sets (3 different sets that will rotate)
+        const questionSets = [
+            [
+                {
+                    question: "If you could instantly master one skill, what would it be and why?",
+                    options: [
+                        "A musical instrument - to express creativity",
+                        "A new language - to connect with more people",
+                        "Public speaking - to influence and inspire",
+                        "Programming - to build innovative solutions",
+                        "Cooking - to bring people together through food"
+                    ]
+                },
+                {
+                    question: "What's one modern convenience you think the world would be better off without?",
+                    options: [
+                        "Social media - it's too addictive",
+                        "Smartphones - they distract from real life",
+                        "Fast fashion - it's wasteful",
+                        "Single-use plastics - terrible for environment",
+                        "Processed foods - unhealthy for society"
+                    ]
+                },
+                {
+                    question: "If you had to choose, would you prefer to know when you'll die or how you'll die?",
+                    options: [
+                        "When - so I can plan my life accordingly",
+                        "How - so I can try to prevent it",
+                        "Neither - ignorance is bliss",
+                        "Both - complete knowledge is power",
+                        "I'd refuse to choose - life's mysteries are important"
+                    ]
+                },
+                {
+                    question: "What's something that's legal but feels like it shouldn't be?",
+                    options: [
+                        "High-frequency stock trading",
+                        "Payday loans with extreme interest",
+                        "Certain political lobbying practices",
+                        "Some forms of data collection",
+                        "Certain addictive substances"
+                    ]
+                },
+                {
+                    question: "If you could live in any fictional universe, which would you choose?",
+                    options: [
+                        "Harry Potter's wizarding world",
+                        "Star Trek's Federation future",
+                        "The Lord of the Rings Middle-earth",
+                        "The Marvel Cinematic Universe",
+                        "A Studio Ghibli animated world"
+                    ]
+                }
+            ],
+            [
+                {
+                    question: "What's the most important invention in human history that doesn't get enough credit?",
+                    options: [
+                        "The printing press - spread knowledge",
+                        "Antibiotics - saved countless lives",
+                        "The internet - connected humanity",
+                        "Agriculture - enabled civilization",
+                        "The wheel - foundation of transport"
+                    ]
+                },
+                {
+                    question: "Would you rather be able to talk to animals or speak all human languages?",
+                    options: [
+                        "Talk to animals - understand other species",
+                        "All human languages - connect with people globally",
+                        "Animals - they might have surprising wisdom",
+                        "Human languages - more practical benefits",
+                        "Neither - I'm fine with my current abilities"
+                    ]
+                },
+                {
+                    question: "What's something everyone should experience at least once in their life?",
+                    options: [
+                        "Living in a foreign country",
+                        "Falling deeply in love",
+                        "Creating something meaningful",
+                        "Helping someone in desperate need",
+                        "Facing a significant fear"
+                    ]
+                },
+                {
+                    question: "If you could eliminate one emotion from human experience, which would it be?",
+                    options: [
+                        "Jealousy - causes so much pain",
+                        "Fear - holds people back",
+                        "Shame - damages self-worth",
+                        "Anger - leads to conflict",
+                        "None - all emotions serve a purpose"
+                    ]
+                },
+                {
+                    question: "What's the most overrated virtue in society today?",
+                    options: [
+                        "Patience - sometimes action is needed",
+                        "Humility - self-promotion has value",
+                        "Optimism - realism is important too",
+                        "Forgiveness - some things shouldn't be forgiven",
+                        "None - all virtues have their place"
+                    ]
+                }
+            ],
+            [
+                {
+                    question: "What's a common piece of advice you strongly disagree with?",
+                    options: [
+                        "Follow your passion - practicality matters",
+                        "Money can't buy happiness - it helps",
+                        "Everything happens for a reason - random events occur",
+                        "Forgive and forget - some things should be remembered",
+                        "Be yourself - sometimes growth requires change"
+                    ]
+                },
+                {
+                    question: "If you could know the absolute truth about one historical event, which would you choose?",
+                    options: [
+                        "JFK assassination - who really did it?",
+                        "Ancient civilizations - how they really lived",
+                        "Jesus' life - what really happened",
+                        "Roswell incident - aliens or not?",
+                        "The origin of the universe"
+                    ]
+                },
+                {
+                    question: "What's something you believe that most people would disagree with?",
+                    options: [
+                        "Technology is making us less human",
+                        "School does more harm than good",
+                        "Democracy isn't the best system",
+                        "Money should be abolished",
+                        "Animals should have human rights"
+                    ]
+                },
+                {
+                    question: "If you had to lose one of your five senses, which would you choose?",
+                    options: [
+                        "Smell - least impact on daily life",
+                        "Taste - can still eat for nutrition",
+                        "Touch - but this affects many things",
+                        "Hearing - would miss music and voices",
+                        "Sight - couldn't imagine losing this"
+                    ]
+                },
+                {
+                    question: "What's the most important question we should be asking but aren't?",
+                    options: [
+                        "How can we ensure AI benefits humanity?",
+                        "What's the purpose of human existence?",
+                        "How do we prepare for post-work society?",
+                        "How can we achieve true equality?",
+                        "What's our responsibility to future generations?"
+                    ]
+                }
+            ]
+        ];
+
+        // DOM elements
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const submitBtn = document.getElementById('submitBtn');
+        const progressText = document.getElementById('progressText');
+        const progressBar = document.getElementById('progressBar');
+        const questionContainer = document.getElementById('questionContainer');
+        const thankYou = document.getElementById('thankYou');
+        const thankYouMessage = document.getElementById('thankYouMessage');
+        const newQuestionsBtn = document.getElementById('newQuestionsBtn');
+
+        // Game state
+        let currentSetIndex = 0;
+        let currentQuestionIndex = 0;
+        let selectedOption = null;
+        let userName = '';
+
+        // Initialize the game
+        function initGame() {
+            currentQuestionIndex = 0;
+            selectedOption = null;
+            loadQuestion();
+            questionContainer.style.display = 'block';
+            thankYou.style.display = 'none';
+        }
+
+        // Load the current question
+        function loadQuestion() {
+            const currentSet = questionSets[currentSetIndex];
+            const currentQuestion = currentSet[currentQuestionIndex];
+            
+            questionText.textContent = currentQuestion.question;
+            optionsContainer.innerHTML = '';
+            
+            currentQuestion.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.innerHTML = `
+                    <input type="radio" name="option" id="option${index}" value="${option}">
+                    <label for="option${index}">${option}</label>
+                `;
+                
+                const radioInput = optionElement.querySelector('input');
+                radioInput.addEventListener('change', () => {
+                    selectedOption = option;
+                    submitBtn.disabled = false;
+                    
+                    // Update selected style
+                    document.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    optionElement.classList.add('selected');
+                });
+                
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Update progress
+            progressText.textContent = `Question ${currentQuestionIndex + 1} of ${currentSet.length}`;
+            progressBar.style.width = `${((currentQuestionIndex + 1) / currentSet.length) * 100}%`;
+            
+            // Reset submit button
+            submitBtn.disabled = true;
+        }
+
+        // Submit answer and move to next question
+        function submitAnswer() {
+            if (selectedOption === null) return;
+            
+            // In a real app, you would save the answer here
+            
+            const currentSet = questionSets[currentSetIndex];
+            
+            if (currentQuestionIndex < currentSet.length - 1) {
+                // Move to next question
+                currentQuestionIndex++;
+                selectedOption = null;
+                loadQuestion();
+            } else {
+                // Show thank you message
+                showThankYou();
+            }
+        }
+
+        // Show thank you message
+        function showThankYou() {
+            questionContainer.style.display = 'none';
+            thankYou.style.display = 'block';
+            
+            // Personalized thank you message
+            const messages = [
+                "Your insights are valuable to us!",
+                "We appreciate your thoughtful responses!",
+                "Thank you for sharing your perspective!",
+                "Your opinions help shape better understanding!",
+                "We're grateful for your time and thoughts!"
+            ];
+            
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            thankYouMessage.textContent = randomMessage;
+        }
+
+        // Load a new set of questions
+        function loadNewQuestions() {
+            currentSetIndex = (currentSetIndex + 1) % questionSets.length;
+            initGame();
+        }
+
+        // Event listeners
+        submitBtn.addEventListener('click', submitAnswer);
+        newQuestionsBtn.addEventListener('click', loadNewQuestions);
+
+        // Start the game when page loads
+        window.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>
