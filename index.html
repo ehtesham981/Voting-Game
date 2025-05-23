@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thought Provoker - Voting Game</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary: #6c5ce7;
@@ -27,7 +29,7 @@
         body {
             font-family: 'Poppins', sans-serif;
             background: url('./22222.jpg') no-repeat center center fixed;
-    background-size: cover;
+            background-size: cover;
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
@@ -203,9 +205,22 @@
         }
 
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-30px);}
-            60% {transform: translateY(-15px);}
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-30px);
+            }
+
+            60% {
+                transform: translateY(-15px);
+            }
         }
 
         footer {
@@ -243,7 +258,20 @@
         }
     </style>
 </head>
+
 <body>
+<script async="async" data-cfasync="false" src="//pl18711282.profitableratecpm.com/8f68316980c84b8a7cfc83fefb76e735/invoke.js"></script>
+<div id="container-8f68316980c84b8a7cfc83fefb76e735"></div>
+    <script type="text/javascript">
+	atOptions = {
+		'key' : '467b07efc933b23df6945bbc5c8495d2',
+		'format' : 'iframe',
+		'height' : 250,
+		'width' : 300,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/467b07efc933b23df6945bbc5c8495d2/invoke.js"></script>
     <header>
         <div class="container">
             <div class="logo">Quiz Game </div>
@@ -280,7 +308,16 @@
             <p>© 2025 Spread Time</p>
         </div>
     </footer>
-
+<script type="text/javascript">
+	atOptions = {
+		'key' : '467b07efc933b23df6945bbc5c8495d2',
+		'format' : 'iframe',
+		'height' : 250,
+		'width' : 300,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/467b07efc933b23df6945bbc5c8495d2/invoke.js"></script>
     <script>
         // Question sets (3 different sets that will rotate)
         const questionSets = [
@@ -472,10 +509,10 @@
         function loadQuestion() {
             const currentSet = questionSets[currentSetIndex];
             const currentQuestion = currentSet[currentQuestionIndex];
-            
+
             questionText.textContent = currentQuestion.question;
             optionsContainer.innerHTML = '';
-            
+
             currentQuestion.options.forEach((option, index) => {
                 const optionElement = document.createElement('div');
                 optionElement.className = 'option';
@@ -483,26 +520,26 @@
                     <input type="radio" name="option" id="option${index}" value="${option}">
                     <label for="option${index}">${option}</label>
                 `;
-                
+
                 const radioInput = optionElement.querySelector('input');
                 radioInput.addEventListener('change', () => {
                     selectedOption = option;
                     submitBtn.disabled = false;
-                    
+
                     // Update selected style
                     document.querySelectorAll('.option').forEach(opt => {
                         opt.classList.remove('selected');
                     });
                     optionElement.classList.add('selected');
                 });
-                
+
                 optionsContainer.appendChild(optionElement);
             });
-            
+
             // Update progress
             progressText.textContent = `Question ${currentQuestionIndex + 1} of ${currentSet.length}`;
             progressBar.style.width = `${((currentQuestionIndex + 1) / currentSet.length) * 100}%`;
-            
+
             // Reset submit button
             submitBtn.disabled = true;
         }
@@ -510,11 +547,11 @@
         // Submit answer and move to next question
         function submitAnswer() {
             if (selectedOption === null) return;
-            
+
             // In a real app, you would save the answer here
-            
+
             const currentSet = questionSets[currentSetIndex];
-            
+
             if (currentQuestionIndex < currentSet.length - 1) {
                 // Move to next question
                 currentQuestionIndex++;
@@ -530,7 +567,7 @@
         function showThankYou() {
             questionContainer.style.display = 'none';
             thankYou.style.display = 'block';
-            
+
             // Personalized thank you message
             const messages = [
                 "Your insights are valuable to us!",
@@ -539,7 +576,7 @@
                 "Your opinions help shape better understanding!",
                 "We're grateful for your time and thoughts!"
             ];
-            
+
             const randomMessage = messages[Math.floor(Math.random() * messages.length)];
             thankYouMessage.textContent = randomMessage;
         }
@@ -557,5 +594,9 @@
         // Start the game when page loads
         window.addEventListener('DOMContentLoaded', initGame);
     </script>
+
+    <script type='text/javascript'
+        src='//pl22780812.profitableratecpm.com/de/cb/b3/decbb371236ab084a6df054d3893174c.js'></script>
 </body>
+
 </html>
